@@ -19,6 +19,20 @@ function addTask() {
     }
   }
 }
+function renderTasks() {
+  taskList.innerHTML = '';
+  tasks.forEach((task) => {
+    const taskElement = document.createElement('li');
+    taskElement.classList.add('task');
+    taskElement.innerHTML = `
+      <span>${task.text}</span>
+      <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
+      <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
+    `;
+    taskList.appendChild(taskElement);
+  });
+}
+
 function editTask(id) {
   const task = tasks.find((task) => task.id === id);
   const newTaskText = prompt('Enter new task text:', task.text);
@@ -34,22 +48,6 @@ function editTask(id) {
     renderTasks();
   }
 }
-
-function renderTasks() {
-  taskList.innerHTML = '';
-  tasks.forEach((task) => {
-    const taskElement = document.createElement('li');
-    taskElement.classList.add('task');
-    taskElement.innerHTML = `
-      <span>${task.text}</span>
-      <button class="edit-btn" onclick="editTask(${task.id})">Edit</button>
-      <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
-    `;
-    taskList.appendChild(taskElement);
-  });
-}
-
-
 function deleteTask(id) {
   tasks = tasks.filter((task) => task.id !== id);
   renderTasks();
@@ -67,5 +65,6 @@ function saveTasks() {
 // 5. When the user clicks the "Delete" button, the task is removed from the tasks array and the task list
 //    is re-rendered.
 // 6. The tasks are saved to local storage so they persist even after refreshing the page.
+
 
 
