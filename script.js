@@ -8,7 +8,6 @@ addTaskBtn.addEventListener('click', addTask);
 function addTask() {
   const task = taskInput.value.trim();
   if (task) {
-    // Check if the task already exists
     const taskExists = tasks.some(existingTask => existingTask.text.toLowerCase() === task.toLowerCase());
     if (!taskExists) {
       tasks.push({ text: task, id: Date.now() });
@@ -19,6 +18,7 @@ function addTask() {
     }
   }
 }
+
 function renderTasks() {
   taskList.innerHTML = '';
   tasks.forEach((task) => {
@@ -37,17 +37,21 @@ function editTask(id) {
   const task = tasks.find((task) => task.id === id);
   const newTaskText = prompt('Enter new task text:', task.text);
   if (newTaskText) {
-    const duplicate = tasks.some(
-      t => t.text.toLowerCase() === newTaskText.toLowerCase() && t.id !== id
+    // Check if any other task (excluding the current one) has the same text
+    const taskExists = tasks.some(existingTask => 
+      existingTask.id !== id && 
+      existingTask.text.toLowerCase() === newTaskText.trim().toLowerCase()
     );
-    if (duplicate) {
+    
+    if (!taskExists) {
+      task.text = newTaskText.trim();
+      renderTasks();
+    } else {
       alert('Task already exists!');
-      return;
     }
-    task.text = newTaskText;
-    renderTasks();
   }
 }
+
 function deleteTask(id) {
   tasks = tasks.filter((task) => task.id !== id);
   renderTasks();
@@ -65,6 +69,3 @@ function saveTasks() {
 // 5. When the user clicks the "Delete" button, the task is removed from the tasks array and the task list
 //    is re-rendered.
 // 6. The tasks are saved to local storage so they persist even after refreshing the page.
-
-
-
