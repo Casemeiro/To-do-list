@@ -49,14 +49,6 @@ function renderTasks() {
   });
 }
 
-function editTask(id) {
-  const task = tasks.find((task) => task.id === id);
-  const newTaskText = prompt('Enter new task text:', task.text);
-  if (newTaskText) {
-    task.text = newTaskText;
-    renderTasks();
-  }
-}
 
 function deleteTask(id) {
   tasks = tasks.filter((task) => task.id !== id);
@@ -75,4 +67,5 @@ function saveTasks() {
 // 5. When the user clicks the "Delete" button, the task is removed from the tasks array and the task list
 //    is re-rendered.
 // 6. The tasks are saved to local storage so they persist even after refreshing the page.
+
 
