@@ -8,9 +8,15 @@ addTaskBtn.addEventListener('click', addTask);
 function addTask() {
   const task = taskInput.value.trim();
   if (task) {
-    tasks.push({ text: task, id: Date.now() });
-    taskInput.value = '';
-    renderTasks();
+    // Check if the task already exists
+    const taskExists = tasks.some(existingTask => existingTask.text.toLowerCase() === task.toLowerCase());
+    if (!taskExists) {
+      tasks.push({ text: task, id: Date.now() });
+      taskInput.value = '';
+      renderTasks();
+    } else {
+      alert('Task already exists!');
+    }
   }
 }
 
